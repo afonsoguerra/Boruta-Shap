@@ -1046,7 +1046,7 @@ class BorutaShap:
 
 
     def plot(self, X_rotation=90, X_size=8, figsize=(12,8),
-            y_scale='log', which_features='all', display=True):
+            y_scale='log', which_features='all', display=True, savefig=None):
 
         """
         creates a boxplot of the feature importances
@@ -1068,8 +1068,12 @@ class BorutaShap:
             select subsets of the features like the accepted, rejected or tentative features default is all.
 
         Display: Boolean
-        controls if the output is displayed or not, set to false when running test scripts
+            Controls if the output is displayed or not, set to false when running test scripts
 
+        savefig: string, optional
+            File path to save the generated figure. The figure will be saved in the format 
+            inferred from the file extension (e.g., `.png`, `.pdf`, `.svg`). If `None`, 
+            the figure is not saved. Ensure the provided path is writable.
         """
         # data from wide to long
         data = self.history_x.iloc[1:]
@@ -1094,14 +1098,15 @@ class BorutaShap:
                       X_rotation=X_rotation,
                       X_size=X_size,
                       y_scale=y_scale,
-                      figsize=figsize)
+                      figsize=figsize,
+                      savefig=savefig)
         if display:
             plt.show()
         else:
             plt.close()
 
 
-    def box_plot(self, data, X_rotation, X_size, y_scale, figsize):
+    def box_plot(self, data, X_rotation, X_size, y_scale, figsize, savefig=None):
 
         if y_scale=='log':
             minimum = data['value'].min()
@@ -1121,6 +1126,9 @@ class BorutaShap:
         ax.set_title('Feature Importance')
         ax.set_ylabel('Z-Score')
         ax.set_xlabel('Features')
+        if savefig:
+            plt.savefig(savefig)
+
 
 
     def create_mapping_of_features_to_attribute(self, maps = []):
