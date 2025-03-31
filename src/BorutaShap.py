@@ -838,7 +838,8 @@ class BorutaShap:
 
                 elif len(self.shap_values.shape) == 3:
                     self.shap_values = np.abs(self.shap_values).sum(axis=0)
-                    self.shap_values = self.shap_values.mean(0)
+                    #self.shap_values = self.shap_values.mean(0)
+                    self.shap_values = self.shap_values.mean(1)
 
                 else:
                     self.shap_values = np.abs(self.shap_values).mean(0)
@@ -862,7 +863,8 @@ class BorutaShap:
 
                 elif len(self.shap_values.shape) == 3:
                     self.shap_values = np.abs(self.shap_values).sum(axis=0)
-                    self.shap_values = self.shap_values.mean(0)
+                    #self.shap_values = self.shap_values.mean(0)
+                    self.shap_values = self.shap_values.mean(1)
 
                 else:
                     self.shap_values = np.abs(self.shap_values).mean(0)
