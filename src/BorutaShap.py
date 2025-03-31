@@ -621,21 +621,19 @@ class BorutaShap:
 
 
     def calculate_hits(self):
+        """Calculate hit counts for each feature based on their importance values.
 
-        """
-        If a features importance is greater than the maximum importance value of all the random shadow
-        features then we assign it a hit.
+        This function computes a threshold based on a specified percentile of the 
+        shadow feature importances. A lower percentile results in a more lenient 
+        threshold, allowing more features to exceed it. A feature is assigned a 
+        "hit" if its importance exceeds this threshold.
 
-        Parameters
-        ----------
-        Percentile : value ranging from 0-1
-            can be used to reduce value of the maximum value of the shadow features making the algorithm
-            more lenient.
-
+        Returns:
+            np.ndarray: A 1D array representing the hit count for each feature.
         """
 
         shadow_threshold = np.percentile(self.Shadow_feature_import,
-                                        self.percentile)
+                                         self.percentile)
 
         padded_hits = np.zeros(self.ncols)
         hits = self.X_feature_import > shadow_threshold
